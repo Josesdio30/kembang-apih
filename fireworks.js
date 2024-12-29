@@ -41,14 +41,32 @@ function createBurst(x, y) {
 	const numSparkles = 50;
 	const radius = 100; // Radius lingkaran untuk huruf
 
+	// Tambahkan teks "Fayza" di tengah ledakan
+	const centerText = document.createElement("div");
+	centerText.classList.add("center-text");
+	centerText.textContent = "Fayza";
+	centerText.style.color = "#ff6f91"; // Warna teks
+	centerText.style.fontSize = "24px"; // Ukuran teks
+	centerText.style.fontWeight = "bold"; // Gaya teks
+	centerText.style.position = "absolute";
+	centerText.style.left = `${x}px`;
+	centerText.style.top = `${y}px`;
+	centerText.style.transform = "translate(-50%, -50%)"; // Memposisikan di tengah
+	document.body.appendChild(centerText);
+
+	// Hilangkan teks setelah beberapa saat
+	setTimeout(() => {
+		centerText.remove();
+	}, 2000); // Durasi teks muncul di layar
+
 	// Letters in a circle
 	for (let i = 0; i < numLetters; i++) {
-			createCircularParticle(x, y, i, radius); // Posisi huruf melingkar
+		createCircularParticle(x, y, i, radius); // Posisi huruf melingkar
 	}
 
 	// Sparkles
 	for (let i = 0; i < numSparkles; i++) {
-			createParticle(x, y, true); // Sparkles tetap acak
+		createParticle(x, y, true); // Sparkles tetap acak
 	}
 }
 
@@ -116,6 +134,13 @@ function animateParticle(el, isSparkle) {
 }
 
 document.addEventListener("click", (e) => {
+	// Hilangkan instructions saat klik pertama
+	const instructions = document.getElementById("instructions");
+	if (instructions) {
+			instructions.style.display = "none";
+	}
+
+	// Jalankan efek kembang api
 	createFirework(e.clientX, e.clientY);
 });
 
